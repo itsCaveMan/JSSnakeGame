@@ -1,0 +1,294 @@
+body {
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    gap: 8rem;
+
+    height: 95vh;
+    width: 95vw;
+    overflow: scroll;
+
+    /* font */
+    font-family: 'Montserrat', sans-serif; /* Add this line */
+
+    /* UNCOMMENT FOR BACKGROUND */
+    /* background: url('./background.gif') repeat center center fixed; */
+    /* background-size: cover; */
+
+}
+
+/* Ensure all text inherits the Montserrat font */
+* {
+    font-family: inherit;
+    font-weight: 300; /* Set the font weight to 300 */
+}
+
+/* ======= GRID =======  */
+.grid {
+    width: 800px;
+    height: 800px;
+    /*border: 100px solid #144a00;*/
+    /*border-radius: 30px;*/
+    background-color: white;
+    margin: 0 auto;
+    /* display: flex; */
+    /* flex-wrap: wrap; */
+  }
+
+.grid div {
+    width: 38px;
+    height: 38px;
+    border: 1px #eaeaea solid;
+	float: left;
+  }
+
+#alert {
+    position: absolute;
+    top: 7%;
+    left: 35%;
+    transform: translate(-50%, -50%);
+    padding: 20px;
+    font-size: 3rem;
+    background-color: white;
+    border: 2px solid #f94dff;
+    border-radius: 10px;
+    z-index: 1000;
+    opacity: 100;
+    transition: opacity 0.5s ease-in-out;
+}
+
+@keyframes popIn {
+    0% {
+        transform: translate(-50%, -50%) scale(0.5);
+        opacity: 0;
+    }
+    100% {
+        transform: translate(-50%, -50%) scale(1);
+        opacity: 1;
+    }
+}
+
+@keyframes fadeOut {
+    0% {
+        opacity: 1;
+    }
+    100% {
+        opacity: 0;
+    }
+}
+
+/* ======= BUTTONS BOX =======  */
+
+.buttonGroup
+{
+	display: flex;
+    flex-direction: column;
+	align-items: center;
+	justify-content: center;
+
+    padding: 1rem;
+    
+    width: 20%;
+    border: 2px solid green;
+    border-radius: 1rem;
+
+    background-color: white;
+
+}
+
+.scores{
+    text-align: center;
+}
+
+#score{font-weight: 300;}
+#level{font-weight: 300;}
+#highscore{
+    font-size: 1.5rem;
+    font-weight: 200;
+}
+
+.instructions {
+    display: none; /* Hide instructions initially */
+    opacity: 0;
+    transition: visibility 0s, opacity 0.5s linear; /* Smooth transition for opacity */
+}
+
+#hover:hover + .instructions, .instructions:hover {
+    display: inherit; /* Make instructions visible when h2 is hovered */
+    opacity: 1;
+}
+
+ol {
+    border-radius: 8px; /* Rounded corners for the list */
+    border: 1px solid #ccc; /* Light gray border */
+    list-style-type: decimal; /* Default numbering style */
+    font-family: Arial, sans-serif; /* Font style */
+}
+
+li {
+    margin-bottom: 10px; /* Space between items */
+    line-height: 1.6; /* Line spacing */
+    font-size: 16px; /* Text size */
+}
+
+.divider {
+    height: 2px;
+    background-color: #ededed;
+    margin: 10px 0;
+    width: 80%;
+}
+
+button {
+    background-color: #4CAF50; /* Green background */
+    border: none; /* Remove borders */
+    color: white; /* White text */
+    padding: 15px 32px; /* Some padding */
+    text-align: center; /* Centered text */
+    text-decoration: none; /* Remove underline */
+    display: inline-block; /* Make the button inline */
+    font-size: 16px; /* Increase font size */
+    margin: 4px 2px; /* Some margin */
+    cursor: pointer; /* Pointer/hand icon */
+    border-radius: 12px; /* Rounded corners */
+    transition-duration: 0.4s; /* 0.4 seconds transition effect to hover */
+}
+
+button:hover {
+    background-color: white; /* White background on hover */
+    color: black; /* Black text on hover */
+    border: 2px solid #4CAF50; /* Green border on hover */
+}
+
+.levelsBar {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+    width: 100%;
+    color: #acacac;
+}
+
+/* ======= DRAWING GRID =======  */
+
+.blue {
+    background: blue;
+	}
+  
+.red {
+	background: red;
+	}
+
+.green {
+    background: green;
+	}
+  
+.white {
+	background: white;
+	}
+
+.snakeHuman {
+    background-image: url("snake.jpg");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+    }
+
+.snakeAI {
+    background-image: url("snakeAI.png");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+    }
+.deadSnake {
+    background-image: url("snakeDead.png");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+    }
+
+.deadAI {
+    background-image: url("deadAiSnake.png");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+    opacity: 0.2;
+    }
+
+.apple {
+    background-image: url("apple.png");
+    /*background-color: white important;*/
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+	}
+
+.wall{
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: contain;
+	}
+
+.wall_level1{
+    background-image: url("wall_level1.png");
+    }
+.wall_level2{
+    background-image: url("wall_level2.png");
+    }
+.wall_level3{
+    background-image: url("wall_level3.png");
+    }
+.wall_level4{
+    background-image: url("wall_level4.png");
+    }
+.wall_level5{
+    background-image: url("wall_level5.png");
+    }
+
+
+
+/* ======= LEAVES ANIMATION =======  */
+/* Leaf animation styles */
+.leaves-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    pointer-events: none; /* Make sure the leaves don't interfere with game interactions */
+    z-index: -1;
+}
+
+.leaf {
+    position: absolute;
+    width: 60px;
+    height: 60px;
+    opacity: 0;
+    background: url('wall_level1.png') no-repeat center center;
+    background-size: contain;
+    animation: leaf-fall linear infinite;
+}
+
+@keyframes leaf-fall {
+    0% {
+        transform: translateY(0) translateX(-40vw);
+        opacity: 0;
+    }
+    5% {
+        transform: translateY(0) translateX(-40vw);
+        opacity: 1;
+    }
+    95% {
+        transform: translateY(calc(100vh + 50px)) translateX(calc(10vw - 50px)) scale(0%);
+        opacity: 1;
+    }
+    100% {
+        transform: translateY(calc(100vh + 50px)) translateX(calc(10vw - 50px)) scale(0%);
+        opacity: 0;
+    }
+}
+

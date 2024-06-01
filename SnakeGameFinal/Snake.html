@@ -1,0 +1,83 @@
+
+<html>
+<head>
+    <title>Snake Project</title>
+    <link rel="stylesheet" href="Snake.css">
+	<script src="HelperLibrary.js"></script>
+    <script src="Snake.js"></script>
+
+    <!-- FONT -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+
+</head>
+
+
+<body>
+
+    <div class="leaves-container">
+        <div class="leaf"></div> <div class="leaf"></div> <div class="leaf"></div> <div class="leaf"></div>
+        <div class="leaf"></div> <div class="leaf"></div> <div class="leaf"></div> <div class="leaf"></div>
+        <div class="leaf"></div> <div class="leaf"></div> <div class="leaf"></div> <div class="leaf"></div>
+        <div class="leaf"></div> <div class="leaf"></div> <div class="leaf"></div> <div class="leaf"></div>
+    </div>
+
+
+    <!-- ALERT -->
+    <p id="alert">Watch out for AI Snakes!</p>
+
+
+    <!-- GRID -->
+    <div>
+        <div id="grid_id" class="grid"></div>
+    </div>
+
+
+    <!-- BUTTONS -->
+    <div class="buttonGroup">
+        
+        <div class="scores">
+            <h1 id="level" >Level: 1</h1>
+            <h1 id="score" >Score: 0</h1>
+            <h1 id="highscore" >High Score: 0</h1>
+        </div>
+
+        <div class="divider">&nbsp;</div>
+
+        <h1>Hold shift for a boost!</h1>
+
+        <div>
+            <button onclick="StartGame()">Start [or Space bar]</button>
+            <div class="levelsBar">
+                <span onclick="Level = 2; DrawBoard()">2</span>
+                <span onclick="Level = 3; DrawBoard()">3</span>
+                <span onclick="Level = 4; DrawBoard()">4</span>
+                <span onclick="Level = 5; DrawBoard()">5</span>
+            </div>
+        </div>
+
+        <h2 id="hover">Hover for instructions!</h2>
+        <div class="instructions">
+            <ol>
+                <li>Collect 3 apples to proceed to next level</li>
+                <li>There are 5 levels</li>
+                <li>Each level gets faster!</li>
+                <li>Each level has 1 additional AI Snake!</li>
+                <li>If a AI Snake hits you, they die!</li>
+                <li>If you hit an AI Snake, you die!</li>
+                <li>If you hit a Dead AI Snake, that is fine!</li>
+                <li>AI Snake moves at half your speed</li>
+                <li>Hold shift for a boost! (⚠️Including AI Snakes)</li>
+
+                <li>Press Space to Start</li>
+                <li>Press Ctrl+R to restart</li>
+            </ol>
+        </div>
+
+    </div>
+
+</body>
+</html>
+
+
