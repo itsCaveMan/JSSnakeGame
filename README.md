@@ -1,8 +1,14 @@
 
 # Snake Game Project
 
+
+## Play the Game
+[![Play Snake Game](https://img.shields.io/badge/Play-Snake%20Game-brightgreen)](https://itscaveman.github.io/JSSnakeGame/SnakeGameFinal/Snake.html)
+
 ## Description
 This project is a modern implementation of the classic Snake game with added features and enhancements. The game challenges players to control a snake, collect apples, and avoid obstacles, including AI-controlled snakes. Each level increases in difficulty with faster speeds and more AI snakes.
+
+<a href="https://itscaveman.github.io/JSSnakeGame/SnakeGameFinal/Snake.html" style="display:inline-block;background-color:#4CAF50;color:white;padding:20px 40px;font-size:24px;border-radius:5px;text-align:center;text-decoration:none;margin:10px 0;">Play Now</a>
 
 ## Features
 - **Classic Snake Gameplay**: Navigate the snake to collect apples and grow longer.
@@ -41,3 +47,6 @@ This project is a modern implementation of the classic Snake game with added fea
     - Use boost strategically to escape tricky situations, but remember AI snakes also boost.
 
 Enjoy playing the Snake Game and strive to achieve the highest score possible!
+
+## Play the Game
+[![Play Snake Game](https://img.shields.io/badge/Play-Snake%20Game-brightgreen)](https://itscaveman.github.io/JSSnakeGame/SnakeGameFinal/Snake.html)
