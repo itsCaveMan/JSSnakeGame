@@ -1,4 +1,4 @@
-// Date: June 10, 2024
+// Date: June 16, 2024
 // Version: 2.7
 // Project: Javascript, Final project, Snake Game
 
@@ -29,6 +29,7 @@ let Board = [
 ]
 // S for human snake, A for apple, W for wall, . for empty space, AI for AI snake, DAI for dead AI snake
 
+// Human snake segments
 let Snake = [
 	[2,10],
 	[3,10],
@@ -38,6 +39,7 @@ let Snake = [
 	// [7,10],
 ]
 
+// Array of AI snakes - each AI snake is an array of segments
 let AISnakes = [
 	// [
 		// [2,16],
@@ -46,20 +48,22 @@ let AISnakes = [
 	// ],
 ]
 
+// Array to store the positions of dead AI snakes, so we can still draw them
 let DeadAISnakes = [];
 
-let Direction = "right";
-let Timer = null;
-let Apple = null;
-let GameStatus = "IDLE";
+let Direction = "right"; // current direction of the human snake
+let Timer = null; // main game loop timer
+let Apple = null; // position of the apple
+let GameStatus = "IDLE"; // game status: IDLE, PLAYING, OVER
 
 let Score = 0;
 let Level = 1;
-let ApplesPerLevel = 3;
+let ApplesPerLevel = 3; // Number of apples required to level up
 
 // We use a function, so anywhere can call it, so we dont repeat code
 const speed = () => 200 - Level * 20;
 
+// Wall images, and background effect, based on the level
 let wallLevel = {
     1: 'wall_level1',
     2: 'wall_level2',
@@ -67,6 +71,8 @@ let wallLevel = {
     4: 'wall_level4',
     5: 'wall_level5',
 }
+
+// Background color based on the level
 let levelBackground = {
     1: 'white',
     2: 'lightyellow',
@@ -177,14 +183,17 @@ function MoveSnake(){
 	DrawBoard();
 }
 
-var alertTimeout; // Declare a variable to hold the timeout ID
-
+// An alert timeout so that it fades out after X seconds
+var alertTimeout;
 function AlertText(message) {
+
+	// Get the alert element and add the styling
     var alertElement = document.getElementById("alert");
     alertElement.innerHTML = message;
     alertElement.style.display = "block"; // Ensure the alert is visible when setting a message
     alertElement.style.animation = "none"; // Reset animation
     alertElement.offsetHeight; // Trigger reflow to restart animation
+
 
     // Apply pop-in animation
     alertElement.style.animation = "popIn 0.5s forwards";
@@ -194,28 +203,26 @@ function AlertText(message) {
         clearTimeout(alertTimeout);
     }
 
-    // Set a new timeout and store its ID
+	// Set a new timeout to fade out the alert after 3 seconds
     alertTimeout = setTimeout(function() {
-        // Apply fade-out animation
         alertElement.style.animation = "fadeOut 0.5s forwards";
-        // Hide the alert after the fade-out animation
-        // setTimeout(function() {
-        //     alertElement.style.display = "none";
-        // }, 500); // Match the duration of the fadeOut animation
     }, 3000);
+
 }
 
 function NextLevel(){
-    Score = 0;
-    Level = Level + 1;
+    Score = 0; // Reset the score
+    Level = Level + 1; // Increase the level
 	AlertText("Level up! " + "🚀".repeat(Level));
 
+	// Update the level display
     document.getElementById("level").innerHTML = "Level: " + Level;
 
     // Adjust snake speed
     clearInterval(Timer);
     Timer = setInterval(Tick, speed());
 
+	// Update the background
 	UpdateBackground();
 
 	// Clear all AI snakes from the Board
@@ -226,28 +233,35 @@ function NextLevel(){
     let requiredAISnakesCount = Level - 1;
     let newAISnakesCount = requiredAISnakesCount - existingAISnakesCount;
 
+	// Create new AI snakes
     for (let i = 0; i < newAISnakesCount; i++) {
         CreateAISnake();
     }
+
 }
 
+// The background effect, changes based on the level
 function UpdateBackground() {
     document.body.style.backgroundColor = levelBackground[Level <= 5 ? Level : 5];
 
     // Update background particles
     const newLeafImage = wallLevel[Level <= 5 ? Level : 5] + '.png';
 
-    // Select all leaves and update their background image
+
+	// Select all leaves and update their background image
     const leaves = document.querySelectorAll('.leaf');
     leaves.forEach(leaf => {
         leaf.style.backgroundImage = `url(${newLeafImage})`;
     });
+
+
 }
 
 function DrawBoard(){
 
 	ClearGrid();
 
+	// Create a deep copy (so we dont change the original board) of the board
 	let _Board = JSON.parse(JSON.stringify(Board));
 
 	// Add Dead AI Snakes to _Board
@@ -291,12 +305,11 @@ function DrawBoard(){
 			else if (_Board[y][x] == "S") AddBlock(x, y, GameStatus == "OVER" ? "deadSnake" : "snakeHuman");
 			else if (_Board[y][x] == "A") AddBlock(x, y, "apple");
 			else if (_Board[y][x] == "AI") AddBlock(x, y, "snakeAI");
-			else if (_Board[y][x] == "DAI") AddBlock(x, y, "deadAI"); // Draw dead AI snakes
+			else if (_Board[y][x] == "DAI") AddBlock(x, y, "deadAI");
 		}
 	}
 }
 
-// KeyPressed will automatically get an event parameter
 let IgnoreNextTicket = false;
 function KeyPressed(event) {
 	const previousDirection = Direction;
@@ -335,17 +348,17 @@ function Boost(event){
     }
 }
 
+
 function GameOver() {
 	GameStatus = "OVER";
 	clearInterval(Timer);
 	Timer = null;
 
-
+	console.log(Board);
 
 	DrawBoard();
 	AlertText("🚫🐍 Game Over! 🐍🚫")
 	UpdateHighscore();
-
 
 }
 
@@ -357,15 +370,23 @@ function UpdateHighscore() {
         AlertText("New Level Highscore! 🏆");
     }
 
+
 	document.getElementById("highscore").innerHTML = "Highscore: " + highscore;
+
 
 }
 
 function StartGame() {
+
+	// If the game is over and the space key is pressed, restart the game
+	if(GameStatus == "OVER") window.location.reload();
+
+
 	AlertText("Start 🐍!");
     DrawBoard();
 
 	UpdateHighscore();
+
 
     Timer = setInterval(Tick, 200);
     document.addEventListener("keydown", KeyPressed);
@@ -376,7 +397,7 @@ function StartGame() {
 }
 
 let aiSnakeMoveInterval = 3; // Change this value to control AI snake speed
-let tickCounter = 0;
+let tickCounter = 0; // Counter to keep track of ticks, snakes move every aiSnakeMoveInterval ticks
 
 // The main logic loop of our program
 function Tick() {
@@ -394,6 +415,7 @@ function Tick() {
 }
 
 function MoveAllAISnakes() {
+
     for (let i in AISnakes) {
         const Dead = MoveAISnake(AISnakes[i]);
 		if (Dead === 'dead') {
@@ -422,9 +444,13 @@ function CalculateDistance(x1, y1, x2, y2) {
 }
 
 function MoveAISnake(AISnake) {
+
+	// If the AI snake is empty, do nothing
 	if (AISnake.length === 0) {
-        return; // If the AI snake is empty, do nothing
+        return;
     }
+
+
 
     let xPosAISnakeHead = AISnake[AISnake.length - 1][0];
     let yPosAISnakeHead = AISnake[AISnake.length - 1][1];
@@ -438,6 +464,8 @@ function MoveAISnake(AISnake) {
         { direction: "up", x: xPosAISnakeHead, y: yPosAISnakeHead - 1 },
         { direction: "down", x: xPosAISnakeHead, y: yPosAISnakeHead + 1 }
     ];
+
+
 
     // Filter out moves that would hit a wall 
     possibleMoves = possibleMoves.filter(move => Board[move.y][move.x] !== "W");
@@ -457,21 +485,24 @@ function MoveAISnake(AISnake) {
 	// Move the AI snake
 	AISnake.push([bestMove.x, bestMove.y]);
 
+
 	// If AI snake hits another AI snake or human snake, mark it as dead
 	if (Board[bestMove.y][bestMove.x] == "W" || Board[bestMove.y][bestMove.x] == "S") {
 
 		DeadAISnakes.push(...AISnake); // Add dead AI snake positions to DeadAISnakes
 
-		for (let segment of AISnake) {
-			Board[segment[1]][segment[0]] = ".";
-			return 'dead';
-		}
+		// Remove all AI from the board
+		Board = Board.map(row => row.map(cell => cell === "AI" ? "." : cell));
+
 		AISnake.length = 0; // Empty the AI snake array to stop it from moving
 
 		AlertText("AI Snake Died! 🐍");
 
-		return;
+		// Remove the snake from the AISnakes array
+		return 'dead';
 	}
+
+
 
 	// Remove the last segment if not growing
 	if (!isGrowing) {
@@ -486,6 +517,8 @@ function MoveAISnake(AISnake) {
 		Board[appleYPos][appleXPos] = ".";
 		CreateApple();
 	}
+
+
 }
 
 // Function to create a new AI Snake

@@ -29,26 +29,31 @@ body {
 
 /* ======= GRID =======  */
 .grid {
-    width: 800px;
-    height: 800px;
+    width: 75vh;
+    height: 75vh;
     /*border: 100px solid #144a00;*/
     /*border-radius: 30px;*/
     background-color: white;
     margin: 0 auto;
+    margin-top: 7rem;
     /* display: flex; */
     /* flex-wrap: wrap; */
+    display: grid;
+    grid-template-columns: repeat(20, 1fr);
+    grid-template-rows: repeat(20, 1fr);
+    gap: 1px;
   }
 
 .grid div {
-    width: 38px;
-    height: 38px;
+    width: 100%;
+    height: 100%;
     border: 1px #eaeaea solid;
 	float: left;
   }
 
 #alert {
     position: absolute;
-    top: 7%;
+    top: 3%;
     left: 35%;
     transform: translate(-50%, -50%);
     padding: 20px;
